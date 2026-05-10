@@ -86,7 +86,7 @@ PROCESSED = BASE / 'processed'
 # 六、工具函数
 # ============================================================
 def ensure_dirs():
-    创建所有需要的输出目录
+    """创建所有需要的输出目录"""
     for d in [PROCESSED, FIGURE_DIR, TABLE_DIR]:
         d.mkdir(parents=True, exist_ok=True)
 
