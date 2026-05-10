@@ -1,0 +1,43 @@
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+__pycache__/
+*.py[cod]
+
+# Python virtual environments
+myenv/
+jupyterenv/
+myjupyter/
+.conda/
+
+# IDE / Editor
+.vscode/
+.idea/
+.cursor/
+.trae/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large data files (CSV, Excel, etc.)
+*.csv
+*.xlsx
+*.xls
+*.json
+*.parquet
+
+# Output images/plots
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+
+# Logs
+*.log
+
+# Misc
+*.pkl
+*.h5
+*.hdf5
