@@ -1,0 +1,15 @@
+data/
+output/
+*.csv
+*.parquet
+*.pkl
+*.json
+!package.json
+.ipynb_checkpoints/
+*.pyc
+__pycache__/
+venv/
+.venv/
+.DS_Store
+Thumbs.db
+duckdb_temp/
