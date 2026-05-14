@@ -1,7 +1,7 @@
 // =====================================================================
 // baseline_reg.do — 描述性统计 + 基准 DID 回归
 // 日期: 2026-05-14
-// 前置: 先在 Python 中运行抽样 → panel_10pct.csv
+// 前置: 先在 Python 中运行抽样 → panel_1to1.csv
 // 抽样代码: 见 notebook 末尾 "Stata 抽样准备" cell
 // =====================================================================
 
@@ -12,7 +12,7 @@ set more off
 // 1. 数据导入
 // =====================================================================
 di "=== 导入 10% 样本 ==="
-import delimited "/Data4/yutao_wen/processed/panel_10pct.csv", clear
+import delimited "/Data4/yutao_wen/processed/panel_1to1.csv", clear
 di "Total rows: " _N
 
 // =====================================================================
