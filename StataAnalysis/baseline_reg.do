@@ -26,12 +26,16 @@ replace log_yearlycitation = ln(1 + yearlycitation) if missing(log_yearlycitatio
 
 // 重命名 (Stata-friendly)
 rename group_val group
-rename paper_numid pid
 rename journal_id jid
 rename dom_distance dom_dist
 rename pre_cites_total pre_cites
 rename log_yearlycitation log_cites
 rename yearlycitation cites
+
+// Panel ID = pair (unique focal_id + paper_id combination)
+// paper 可出现在多个 pair 中, 所以用 pair 而非 paper_id
+egen panel_id = group(focal_id paper_id)
+drop paper_numid pair
 
 // 标签
 label var group    "Treatment (1=focal, 0=candidate)"
@@ -45,9 +49,6 @@ label var numr     "No. of references"
 label var pre_cites "Pre-retraction total cites"
 label var selfretra "Self-retracted focal"
 label var age      "Paper age"
-
-// Panel
-xtset pid year
 
 // =====================================================================
 // 3. 描述性统计 (Table 1)
@@ -82,20 +83,20 @@ di " TABLE 2: BASELINE DID"
 di "=========================================="
 
 // (1) DID only
-reghdfe log_cites did, absorb(pid year age) cluster(focal_id)
+reghdfe log_cites did, absorb(panel_id year age) cluster(focal_id)
 est store m1
 estadd local paper_fe "Y"; estadd local year_fe "Y"; estadd local ctrl "None"
 
 // (2) + Basic controls
 reghdfe log_cites did author_year ref_year sef_year ///
-    log_numa log_numr, absorb(pid year age) cluster(focal_id)
+    log_numa log_numr, absorb(panel_id year age) cluster(focal_id)
 est store m2
 estadd local paper_fe "Y"; estadd local year_fe "Y"; estadd local ctrl "Basic"
 
 // (3) + Full controls (Azoulay 2019)
 reghdfe log_cites did author_year ref_year sef_year ///
     log_numa log_numr log_pre_cites pre_cites, ///
-    absorb(pid year age) cluster(focal_id)
+    absorb(panel_id year age) cluster(focal_id)
 est store m3
 estadd local paper_fe "Y"; estadd local year_fe "Y"; estadd local ctrl "Full"
 
