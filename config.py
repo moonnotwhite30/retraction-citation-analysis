@@ -119,3 +119,20 @@ if __name__ == '__main__':
     for name, path in GEN.items():
         status = 'OK' if path.exists() else 'MISSING'
         print(f'  {name}: {path}  ({status})')
+
+# ============================================================
+# 八、DuckDB 配置 — 临时文件必须放在 Data4，禁止污染 home
+# ============================================================
+DUCKDB_TEMP_DIR = BASE / "duckdb_tmp"
+DUCKDB_TEMP_DIR.mkdir(parents=True, exist_ok=True)
+
+# 环境变量兜底：无论代码怎么调用，DuckDB 都写 Data4
+os.environ["DUCKDB_TEMP_DIRECTORY"] = str(DUCKDB_TEMP_DIR)
+
+
+def get_db():
+    """返回一个 DuckDB 连接，临时文件自动写到 Data4。"""
+    import duckdb
+    con = duckdb.connect()
+    con.execute(f"PRAGMA temp_directory='{DUCKDB_TEMP_DIR}'")
+    return con
